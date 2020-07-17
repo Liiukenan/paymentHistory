@@ -13,10 +13,10 @@ if (process.env.NODE_ENV === 'production') {
     axios.defaults.baseURL = 'http://api.xinggeyun.com'; //路径
   } else {
     //test 测试环境
-    axios.defaults.baseURL = 'http://192.168.0.152:8102'; //路径
+    axios.defaults.baseURL = 'http://localhost:3000'; //路径
   }
 } else { //dev 开发环境 axios.defaults.baseURL = 'http://192.168.0.152:8102';//路径
-  axios.defaults.baseURL = 'http://192.168.0.152:8102'
+  axios.defaults.baseURL = 'http://localhost:3000'
 }
 new Vue({
   router,

@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
@@ -15,14 +14,17 @@ export default {
     HelloWorld
   },
   mounted() {
-    console.log("1234523");
+    let data={
+      title:1234,
+      body:567
+    }
     this.http({
       method: "post",
-      url: "/user/12345",
-      data: {
-        firstName: "Fred",
-        lastName: "Flintstone"
-      }
+      url: "/addpost",
+      data:JSON.stringify(data)
+      
+    }).then(res=>{
+      console.log(res)
     });
   }
 };
