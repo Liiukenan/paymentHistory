@@ -8,14 +8,14 @@ module.exports = {
     "":true,
     "showIncentiveVideoAd":true,
     "shareWechatMoments":true,
-    "getUserToken":true
+    "jsInteractive":true
   },
   'extends': [
     'plugin:vue/essential',
     'eslint:recommended'
   ],
   rules: {
-    'no-console': 'on',
+    'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     "no-unused-vars": 'off'
   },
