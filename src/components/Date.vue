@@ -3,7 +3,7 @@
 <div class='my-date flex-justify-center flex-items-center'>
     <button @click="openPicker" class="date-btn flex-justify-center flex-items-center">
         <span class="fs-14">{{newDate}}</span>  
-        <img src="../assets/images/ic_date_arrow.png" alt="">  
+        <img src="../assets/images/ic_date_arrow.png" alt="" :class="ml">  
     </button>
     <mt-datetime-picker
            v-model="pickerVisible"   
@@ -14,8 +14,10 @@
            month-format="{value}"
            date-format="{value}"
            year-format="{value}"
+           :startDate="new Date('2020/1/1')"
+           :endDate="new Date()"
            @confirm="handleConfirm"     
-           @visible-change = "visbleChange" 
+           @visible-change = "visbleChange"
          >
          </mt-datetime-picker>
 </div>
@@ -29,11 +31,13 @@ components: {},
 data() {
     return {
         pickerVisible:new Date(),
+        ml:window.lang=="ar"?'mr-4':'ml-4',
         time:'',
         handler:function(e){e.preventDefault()},
         cancel:this.$t("cancel"),
         confirm:this.$t("confirm"),
         newDate:'',
+        
     };
 },
 computed: {
@@ -42,7 +46,7 @@ computed: {
 watch: {
     visible(val) {
         this.$emit('visible-change', val);
-      }
+    }
 },
 methods: {
      ...mapActions(["getList"]),
@@ -69,7 +73,9 @@ methods: {
         let date=`${year}/${month}/${day}`;
         this.setDate(date);
         let data=this.base.getData(date);
+        
         this.changeDate(date);
+        
         this.getList(data);
       },
       changeDate(d){
@@ -98,14 +104,15 @@ mounted() {
     .my-date{
         height 1.666667rem
         .date-btn{
-            width 2.555556rem
+            padding-left 15px
+            padding-right 15px
             height 0.888889rem
             background #fff
             border-radius 0.444444rem
             img{
                 width 0.277778rem
                 height 0.166667rem
-                margin-left 0.083333rem
+                
             }
         }
         /deep/.mint-datetime .picker-toolbar{

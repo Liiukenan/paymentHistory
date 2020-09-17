@@ -16,6 +16,7 @@ FastClick.attach(document.body);
 Vue.component('lottie',lottie)
 import md5 from 'js-md5';
 Vue.prototype.$md5 = md5;
+Vue.prototype.window = window;
 Vue.prototype.base = base;
 Vue.prototype.http = axios;
 Vue.config.productionTip = false;

@@ -1,9 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" :class="ar">
     <Header :headerTitle="headerTitle" @back="back"></Header>
-    <transition name="fade-transform">
-      <router-view class="router-view"/>
-    </transition>
+   <transition :name="transitionName">
+          <keep-alive>
+              <router-view class="transitionBody"></router-view>
+          </keep-alive>
+        </transition>
     <Loading v-if="loading" @closeLoading="closeLoading"/>
     <Retry v-if="showRetry"/>
   </div>
@@ -18,7 +20,9 @@ export default {
   data() {
     return {
       headerTitle: "",
-      list:""
+      list:"",
+      transitionName: 'transitionLeft',
+      ar:window.lang=="ar"?'ar':false
     };
   },
   components: {
@@ -29,13 +33,25 @@ export default {
   watch: {
     $route(to, from) {
       this.title();
+      const arr = ['/details'];
+      const compare = arr.indexOf(to.path)>arr.indexOf(from.path);
+      if(window.lang=="ar"){
+        this.transitionName = compare ? 'transitionRight' : 'transitionLeft';
+        return;
+      }
+      this.transitionName = compare ? 'transitionLeft' : 'transitionRight';
+
+      
     }
   },
   methods: {
     ...mapActions(["getList"]),
     ...mapMutations({setLoading:"SETLOADING",setShowRetry:"SETSHOWRETRY",listEmpty:"LISTEMPTY"}),
     closeLoading(data){
+      // 三秒后关闭loading
       this.setLoading(data);
+      console.log(13424);
+      // 显示异常页
       this.setShowRetry(true);
       this.listEmpty(null);
     },
@@ -49,7 +65,7 @@ export default {
     },
     title() {
       if (this.$route.path == "/") {
-        this.headerTitle = this.$t("payment");
+        this.headerTitle = this.$t("payment"); 
         // this.headerTitle = this.base.getToken()
       }
       if (this.$route.path == "/details") {
@@ -74,22 +90,24 @@ export default {
 #app{
   min-height 100vh
 }
-.router-view {
+.transitionBody{
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   z-index: 99;
+  transition: all 0.4s ease-out;
 }
-.fade-transform-enter-active, .fade-transform-leave-active {
-  transition: all 0.5s;
+.transitionLeft-enter,
+.transitionRight-leave-active {
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+   /*当左滑进入右滑进入过渡动画*/
+}
+.transitionLeft-leave-active,
+.transitionRight-enter {
+  -webkit-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
 }
 
-.fade-transform-enter {
-  transform: translateX(100%);
-}
-
-.fade-transform-leave-to {
-  transform: translateX(-100%);
-}
 </style>

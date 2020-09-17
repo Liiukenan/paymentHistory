@@ -1,8 +1,9 @@
 <!-- 列表记录 -->
 <template>
-<div class="wrapper" ref="wrapper">
-    <div class="history content" v-if="list && list.length>0">
-        <div class="flex-between bg-white pt-14 pb-14 pl-16 pr-16 history-item" v-for="(item,index) in list" :key="index" @click="details(index)">
+<div>
+    <div class="history wrapper"  @scroll="listScroll($event)" ref="wrapper">
+        <div ref="content">
+          <div class="flex-between bg-white pt-14 pb-14 pl-16 pr-16 history-item" v-for="(item,index) in list" :key="index" @click="details(index)">
             <div class="flex-column content">
                 <div class="flex-items-center coins">
                     <!-- <img src="../assets/images/ic_VIP_com.fachat.freechat.png" alt="" v-if="item.type==1" class="vip">  -->
@@ -10,22 +11,25 @@
                     <span class="fs-16  number bold-500" v-if="item.type==1">{{filterDays(item.coins)}}</span>
                     <span class="fs-16 ml-6 number bold-500" v-else>{{item.coins}}</span>
                 </div>
-                <div class="fs-12 date-time fc-hui4 mt-9">
+                <div class="fs-12 date-time fc-hui4 mt-9" :class="mlTime">
                     {{item.time}}
                 </div>
             </div>
             <div class="flex-column money">
-                <div class="fs-16 number">{{item.money}}</div>
-                <div class="fc-green fs-12" v-if="item.status==1">{{$t("successful")}}</div>
-                <div class="fc-red fs-12" v-if="item.status==0">{{$t("failed")}}</div>
-                <div class="fc-gray fs-12" v-if="item.status==2">{{$t("pending")}}</div>
+                <div class="fs-16 number" :class="textAlign"><span class="mr-5">{{item.currency}}</span>{{item.money}}</div>
+                <div :class="mlMoney" class="fc-green fs-12" v-if="item.status==1">{{$t("successful")}}</div>
+                <div :class="mlMoney" class="fc-red fs-12" v-if="item.status==0">{{$t("failed")}}</div>
+                <div :class="mlMoney" class="fc-gray fs-12" v-if="item.status==2">{{$t("pending")}}</div>
             </div>
+        </div>  
         </div>
-        <div class="flex-justify-center mt-15 fc-hui4 mb-15">
-            {{$t("recorded")}}
-        </div>
+        
+        
     </div>
     <Empty v-if="list && list.length==0"/> 
+    <div class="flex-justify-center mt-15 fc-hui4 mb-15 pl-24 pr-24 text-center" v-if="list && list.length>0">
+            {{$t("recorded")}}
+        </div>
     </div>
     
    
@@ -37,14 +41,56 @@
 import Empty from './Empty'
 import {mapState} from "vuex"
 import {getQueryVariable} from "../api/util"
+import BScroll from 'better-scroll' 
 export default {
     data(){
         return{
-            getQueryVariable:getQueryVariable('packageName')
+            getQueryVariable:getQueryVariable('packageName'),
+            mlTime:window.lang=='ar'?"mr-time":"ml-time",
+            mlMoney:window.lang=='ar'?"ml-money":"mr-money",
+            textAlign:window.lang=='ar'?"text-left":""
         }
     },
-    watch: {},
+    watch: {
+        // $route(to, from) {
+        //   this.setTop(this.$refs.wrapper.scrollTop);
+        // },
+        list(){
+            let wrapper = document.querySelector('.wrapper') 
+             
+            this.$nextTick(()=>{
+                setTimeout(() => {
+                    // this.$refs.wrapper.scrollTop=this.top;
+                    let scroll = new BScroll(wrapper, {
+                        click:true,
+                        // scrollbar:true,
+                        // tap:true,
+                        // preventDefault:false
+                      
+                    })
+                   
+                    
+
+                }, 200);
+            
+        })
+        }
+    },
+    updated(){
+        
+        
+        // if(this.list){
+            // console.log(this.$refs.wrapperScroll.scrollTop);
+        // }
+    },
     methods: {
+        // ...mapMutations({setTop:"SETTOP"}),
+        // listScroll($event){
+        //     // console.log(e.target.clientHeight);
+        //     console.log($event.target.scrollTop);
+        //     // console.log($event.target.scrollTop);
+            
+        // },
         details(index){
             this.$router.push({path:'/details',query:{listId:index}})
         },
@@ -68,18 +114,22 @@ export default {
         Empty
     },
     computed:{
-        ...mapState(["list"])
+        ...mapState(["list","top"])
     }
 }
 </script>
 <style lang='stylus' scoped>
 .history{
-    padding-bottom 0.416667rem
+    
+    height 463px
+    overflow-y auto
+   
    .history-item{
        border-bottom  0.027778rem solid rgba(0,0,0,0.08);
    }
    .content{
        position relative
+       background #fff
    }
    .coins{
         .vip{
@@ -93,16 +143,26 @@ export default {
     } 
     .date-time{
         transform scale(0.83)
-        margin-left -0.277778rem
+        &.ml-time{
+            margin-left -0.277778rem
+        }
+        &.mr-time{
+            margin-right -0.277778rem
+        }
     }
     .money{
         text-align right 
        .number{
             font-weight 500
         } 
-        .fc-green{
+        .fc-green,.fc-red,.fc-gray{
             transform scale(0.83)
-            margin-right -0.25rem
+            &.mr-money{
+                margin-right -0.2rem
+            }
+            &.ml-money{
+                margin-left -0.2rem
+            }
         }
     }
     

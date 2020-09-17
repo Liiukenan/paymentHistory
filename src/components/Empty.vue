@@ -2,7 +2,7 @@
 <template>
 <div class='flex-items-center flex-justify-center flex-column empty'>
     <img src="../assets/images/ic_PaymentHistory_ParaMe.png" alt="">
-    <span class="fc-hui4 fs-14 mt-12">{{$t('noPayment')}}</span>
+    <span class="fc-hui4 fs-14 mt-12 text-center">{{$t('noPayment')}}</span>
 </div>
 </template>
 <style lang='stylus' scoped>

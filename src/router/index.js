@@ -8,7 +8,7 @@ const routes = [
     name: "home",
     component: Home,
     meta: {
-      keepAlive: false // 不需要缓存
+      keepAlive: true // 需要缓存
     }
   },
   {
@@ -17,7 +17,7 @@ const routes = [
     component: () =>
       import("../components/Details.vue"),
     meta: {
-        keepAlive: false // 不需要缓存
+        keepAlive: true // 需要缓存
     }
   }
 ];

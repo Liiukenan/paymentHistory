@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
     axios.defaults.baseURL = 'https://www.easy-mock.com/mock/5f51be3522b6925fcfc5db2f/api'; //路径
   } else {
     //test 测试环境
-    axios.defaults.baseURL = 'https://www.easy-mock.com/mock/5f51be3522b6925fcfc5db2f/api'; //路径
+    axios.defaults.baseURL = 'http://54.222.148.146:47000/common_service'; //路径
   }
 } else { //dev 开发环境 axios.defaults.baseURL = 'http://192.168.0.152:8102';//路径
   axios.defaults.baseURL = 'http://54.222.148.146:47000/common_service';

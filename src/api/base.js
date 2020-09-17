@@ -25,12 +25,14 @@ export default {
         return JSON.stringify(data);
       } catch (e) {
         e;
-        token = "vWh6gPezmuFAqD09N38p2KB5IfUZTJ";
+        token = "QOVAZPv9CHcxyh02XjSaY8d53tgeD6";
         data.hx5=md5(token + getQueryVariable("jid") + date);
+        // data.hx5="cc241f4074193cd55c19fcfc083d9980";
         return JSON.stringify(data);
        
       }
     }
+
   },
   getToken() {
     let token = "";

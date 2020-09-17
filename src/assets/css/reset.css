@@ -24,6 +24,11 @@ html,body{
     -webkit-text-size-adjust:none;
     -webkit-overflow-scrolling: touch; 
     background: #F2F2F2;
+    
+}
+.ar{
+    direction:rtl;
+    unicode-bidi:bidi-override;
 }
 .black-font{
     font-family: '黑体';
@@ -312,6 +317,9 @@ button{
 .pl-20{
     padding-left: 20px;
 }
+.pl-24{
+    padding-left: 24px;
+}
 .pl-30{
     padding-left: 30px;
 }
@@ -326,6 +334,9 @@ button{
 }
 .pr-17{
     padding-right: 17px;
+}
+.pr-24{
+    padding-right: 24px;
 }
 .pl-25{
     padding-left: 25px;
@@ -578,8 +589,14 @@ button{
 .mb-5{
     margin-bottom: 5px;
 }
+.text-left{
+    text-align: left;
+}
 .text-center{
     text-align: center;
+}
+.text-right{
+    text-align:right;
 }
 /* 布局 */
 .flex-right{

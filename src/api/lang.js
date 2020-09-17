@@ -3,7 +3,7 @@ import Vue from "vue";
 Vue.use(VueI18n)
 import data from './langData'
 import {getQueryVariable} from './util'
-let countryCodeArr=['en','ar','de','es','fr','hi','in','tr',"ko","zh_TW","ja"];
+let countryCodeArr=['en','ar','de','es','fr','hi','in','tr',"ko","zh","ja"];
 let countryCode=getQueryVariable("lang") || 'en';
 let countryResult=null;
 for(var x of countryCodeArr){
@@ -26,7 +26,7 @@ const i18n = new VueI18n({
     in: data["in"],
     tr: data["tr"],
     ko: data["ko"],
-    zh_TW: data["zh_TW"],
+    zh: data["zh"],
     ja: data["ja"],
     // zh: require("../../common/lang/zh")
   }

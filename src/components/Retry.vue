@@ -1,7 +1,7 @@
-import { mapMutations } from 'vuex';
 <!-- 网络错误 -->
 <template>
 <div class='flex-items-center flex-justify-center flex-column empty'>
+
     <img src="../assets/images/ic_PaymentHistory_error.png" alt="">
     <span class="fc-hui4 fs-14 mt-12 sorry bold-500">{{$t('sorry')}}</span>
     <a href="javascript:void(0)" class="fs-18 bold mt-16 flex-justify-center flex-items-center" @click="retry">{{$t('refesh')}}</a>
@@ -14,10 +14,11 @@ export default {
         ...mapState(['date']),
     },
     methods:{
-         ...mapMutations({setLoading:"SETLOADING"}),
+         ...mapMutations({setLoading:"SETLOADING",setShowRetry:"SETSHOWRETRY"}),
         ...mapActions(['getList']),
         retry(){
             this.setLoading(true);
+            this.setShowRetry(false);
             let data=this.base.getData(this.date);
             this.getList(data);
         }
@@ -30,6 +31,7 @@ export default {
         left 50%
         top 50%
         transform translate(-50%,-50%)
+        z-index 9999
         img{
             width 64px
             height 64px

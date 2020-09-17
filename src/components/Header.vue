@@ -1,8 +1,8 @@
 <!-- 头部 -->
 <template>
     <div class='header flex-items-center fs-18 flex-between'>
-        <div class="pic ml-10" @click="back">
-            <img src="../assets/images/ic_payment_back.png" alt="">
+        <div class="pic" :class="ml" @click="back">
+            <img :src="require(`../assets/images/ic_payment_back${window.lang=='ar'?'ar':''}.png`)" alt="">
         </div>
         <span>{{headerTitle}}</span>
         <div class="pic">
@@ -16,7 +16,8 @@ props:["headerTitle"],
 components: {},
 data() {
     return {
-        token:''
+        token:'',
+        ml:window.lang=='ar'?'mr-10':'ml-10'
     };
 },
 methods: {
