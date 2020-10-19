@@ -73,9 +73,7 @@ methods: {
         let date=`${year}/${month}/${day}`;
         this.setDate(date);
         let data=this.base.getData(date);
-        
         this.changeDate(date);
-        
         this.getList(data);
       },
       changeDate(d){

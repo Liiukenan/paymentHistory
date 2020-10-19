@@ -25,7 +25,17 @@ const data={
             lifeTime:"Lifetime #",
             sorry:"Sorry, something went wrong while loading. Please try again later.",
             refesh:"Refresh",
-            noPayment:"No payment history"
+            noPayment:"No payment history",
+            refreshBtn:"Refresh purchase status",
+            verification:"Verification in progress…",
+            refreshBtns:"Refresh purchase status (@s)",
+            unsuccessful:"Payment unsuccessful",
+            contact:"Please contact us if you have any questions.",
+            ok:"OK",
+            wait:"Please wait..."
+
+
+
         },
         ar:{
             payment:'محفوظات الدفع',
@@ -53,7 +63,14 @@ const data={
             lifeTime:"مدى الحياة #",
             sorry:"عذراً، حدث خطأ ما خلال التحميل. يُرجى المحاولة مجدداً في وقت لاحق.",
             refesh:"إعادة تحميل",
-            noPayment:"لا يوجد محفوظات الدفع"
+            noPayment:"لا يوجد محفوظات الدفع",
+            refreshBtn:"تحديث حالة الشراء",
+            verification:"جاري التحقق ...",
+            refreshBtns:"تحديث حالة الشراء (@s)",
+            unsuccessful:"عملية الدفع فشلت",
+            contact:"يرجى الاتصال بنا إذا كان لديك أي أسئلة.",
+            ok:"حسناً",
+            wait:"يرجى الانتظار..."
         },
         tr:{
             payment:"Ödeme Geçmişi",
@@ -81,7 +98,14 @@ const data={
             lifeTime:"Ömür boyu #",
             sorry:"Üzgünüz, yükleme sırasında bir şeyler ters gitti. Lütfen daha sonra tekrar dene. ",
             refesh:"Yenile",
-            noPayment:"Ödeme geçmişi yok"
+            noPayment:"Ödeme geçmişi yok",
+            refreshBtn:"Satın alma durumunu yenile",
+            verification:"Doğrulama sürüyor...",
+            refreshBtns:"Satın alma durumunu yenile (@s)",
+            unsuccessful:"Ödeme başarısız",
+            contact:"Herhangi bir sorunuz varsa lütfen bizimle iletişime geçin.",
+            ok:"TAMAM",
+            wait:"Lütfen bekleyin..."
         },
         es:{
             payment:'Historial de pagos',
@@ -109,7 +133,14 @@ const data={
             lifeTime:"# de por vida",
             sorry:"Lo sentimos, algo ha salido mal mientras se cargaba. Inténtalo de nuevo más tarde.",
             refesh:"Recarga",
-            noPayment:"Sin historial de pagos"
+            noPayment:"Sin historial de pagos",
+            refreshBtn:"Actualizar el estado de la compra",
+            verification:"Verificación en curso…",
+            refreshBtns:"Actualizar el estado de la compra (@s)",
+            unsuccessful:"Pago fallido",
+            contact:"Por favor, póngase en contacto con nosotros si tiene alguna pregunta.",
+            ok:"Vale",
+            wait:"Espera, por favor..."
             
 
         },
@@ -139,7 +170,14 @@ const data={
             lifeTime:"# Seumur Hidup",
             sorry:"Maaf, terjadi kesalahan saat memuat. Silakan coba lagi nanti.",
             refesh:"Segarkan",
-            noPayment:"Tidak ada riwayat pembayaran"
+            noPayment:"Tidak ada riwayat pembayaran",
+            refreshBtn:"Muat ulang status pembelian",
+            verification:"Verifikasi sedang berlangsung...",
+            refreshBtns:"Muat ulang status pembelian (@s)",
+            unsuccessful:"Pembayaran gagal",
+            contact:"Silakan hubungi kami jika Anda memiliki pertanyaan.",
+            ok:"Oke",
+            wait:"Mohon tunggu..."
 
         },
         hi:{
@@ -168,7 +206,14 @@ const data={
             lifeTime:"आजीवन #",
             sorry:"क्षमा करें, लोड करते में कुछ समस्या हुई है। बाद में पुन: प्रयास करें।",
             refesh:"ताज़ा करें",
-            noPayment:"कोई भुगतान इतिहास नहीं"
+            noPayment:"कोई भुगतान इतिहास नहीं",
+            refreshBtn:"खरीद की स्थिति को रिफ्रेश करें",
+            verification:"सत्यापन जारी है...",
+            refreshBtns:"खरीद की स्थिति को रिफ्रेश करें (@s)",
+            unsuccessful:"भुगतान असफल हुआ",
+            contact:"यदि आपके कोई प्रश्न हैं तो कृपया हमसे से संपर्क करें।",
+            ok:"ठीक है",
+            wait:"कृपया प्रतीक्षा करें..."
         },
         de:{
             payment:"Zahlungshistorie",
@@ -196,7 +241,14 @@ const data={
             lifeTime:"# lebenslang",
             sorry:"Entschuldigung, beim Laden ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
             refesh:"Neuladen",
-            noPayment:"Keine Zahlungshistorie"
+            noPayment:"Keine Zahlungshistorie",
+            refreshBtn:"Einkaufsstatus aktualisieren",
+            verification:"Verifizierung im Gange...",
+            refreshBtns:"Einkaufsstatus aktualisieren (@s)",
+            unsuccessful:"Bezahlung fehlgeschlagen",
+            contact:"Bitte kontaktieren Sie uns, wenn Sie Fragen haben.",
+            ok:"Okay",
+            wait:"Bitte warten …"
         },
         fr:{
             payment:"Historique des paiements",
@@ -224,7 +276,14 @@ const data={
             lifeTime:"# à vie",
             sorry:"Désolé, le chargement a échoué. Veuillez réessayer plus tard.",
             refesh:"Actualiser",
-            noPayment:"Pas d'historique de paiement"
+            noPayment:"Pas d'historique de paiement",
+            refreshBtn:"Actualiser le statut de l'achat",
+            verification:"Vérification en cours…",
+            refreshBtns:"Actualiser le statut de l'achat (@s)",
+            unsuccessful:"Paiement échoué",
+            contact:"Contactez-nous si vous avez des questions.",
+            ok:"D'accord",
+            wait:"Merci de patienter..."
         },
         ja:{
             payment:"支払履歴",
@@ -239,7 +298,7 @@ const data={
             method:"支払方法：",
             number:"注文番号：",
             recorded:"お支払い情報はUTC時間で記録され、お客様のご確認用のみの目的となります。",
-            problems:"若您付款時有任何問題，請聯繫客戶支援。",
+            problems:"支払いに問題がありましたら、カスタマーサポートまでお問い合わせください。",
             support:"カスタマーサポート",
             coins:"@ コイン",
             details:"詳細",
@@ -252,7 +311,14 @@ const data={
             lifeTime:"生涯#",
             sorry:"ロード中に何らかのエラーが発生しました。後でもう一度お試しください。",
             refesh:"更新",
-            noPayment:"支払い履歴なし"
+            noPayment:"支払い履歴なし",
+            refreshBtn:"購入ステータを更新",
+            verification:"認証を行っています…",
+            refreshBtns:"購入ステータを更新（@s）",
+            unsuccessful:"支払いできませんでした",
+            contact:"不明な点などがありましたらお問い合わせください。",
+            ok:"OK",
+            wait:"お待ちください..."
         },
         zh:{
             payment:"付款紀錄",
@@ -280,7 +346,14 @@ const data={
             lifeTime:"終身 #",
             sorry:"抱歉，載入時發生問題。請稍後再試。",
             refesh:"刷新",
-            noPayment:"沒有付款記錄"
+            noPayment:"沒有付款記錄",
+            refreshBtn:"重新整理購買狀態",
+            verification:"驗證進行中…",
+            refreshBtns:"重新整理購買狀態（@s）",
+            unsuccessful:"付款失敗",
+            contact:"如果您有任何疑問，請聯繫我們。",
+            ok:"OK",
+            wait:"請稍候⋯⋯"
         },
         ko:{
             payment:"결제 이력",
@@ -308,7 +381,14 @@ const data={
             lifeTime:"평생 #",
             sorry:"죄송합니다, 로드 중에 뭔가 잘못되었습니다. 나중에 다시 시도해 주세요.",
             refesh:"새로 고침",
-            noPayment:"결제 이력 없음"
+            noPayment:"결제 이력 없음",
+            refreshBtn:"구매 상태 새로고침",
+            verification:"확인 진행 중…",
+            refreshBtns:"구매 상태 새로고침 (@s)",
+            unsuccessful:"결제 실패",
+            contact:"질문이 있으시면 저희에게 연락하십시오.",
+            ok:"확인",
+            wait:"기다려 주세요..."
         }
 }
 export default data;

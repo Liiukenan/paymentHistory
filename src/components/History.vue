@@ -6,13 +6,12 @@
           <div class="flex-between bg-white pt-14 pb-14 pl-16 pr-16 history-item" v-for="(item,index) in list" :key="index" @click="details(index)">
             <div class="flex-column content">
                 <div class="flex-items-center coins">
-                    <!-- <img src="../assets/images/ic_VIP_com.fachat.freechat.png" alt="" v-if="item.type==1" class="vip">  -->
                     <img :src="require(`../assets/images/ic_coins_${getQueryVariable}.png`)" v-if="item.type==2" alt=""  class="ic-coin">
                     <span class="fs-16  number bold-500" v-if="item.type==1">{{filterDays(item.coins)}}</span>
                     <span class="fs-16 ml-6 number bold-500" v-else>{{item.coins}}</span>
                 </div>
                 <div class="fs-12 date-time fc-hui4 mt-9" :class="mlTime">
-                    {{item.time}}
+                    {{convertUTCDateToLocalDate(item.time)}}
                 </div>
             </div>
             <div class="flex-column money">
@@ -27,10 +26,15 @@
         
     </div>
     <Empty v-if="list && list.length==0"/> 
-    <div class="flex-justify-center mt-15 fc-hui4 mb-15 pl-24 pr-24 text-center" v-if="list && list.length>0">
-            {{$t("recorded")}}
-        </div>
+    <!-- <div class="flex-justify-center mt-15 fc-hui4 mb-15 pl-24 pr-24 text-center" v-if="list && list.length>0">
+        {{$t("recorded")}}
+    </div> -->
+    
+    
     </div>
+
+
+   
     
    
     
@@ -39,8 +43,9 @@
 
 <script>
 import Empty from './Empty'
+
 import {mapState} from "vuex"
-import {getQueryVariable} from "../api/util"
+import {getQueryVariable,convertUTCDateToLocalDate,localDate,getTime} from "../api/util"
 import BScroll from 'better-scroll' 
 export default {
     data(){
@@ -48,16 +53,14 @@ export default {
             getQueryVariable:getQueryVariable('packageName'),
             mlTime:window.lang=='ar'?"mr-time":"ml-time",
             mlMoney:window.lang=='ar'?"ml-money":"mr-money",
-            textAlign:window.lang=='ar'?"text-left":""
+            textAlign:window.lang=='ar'?"text-left":"",
+            convertUTCDateToLocalDate:convertUTCDateToLocalDate
+
         }
     },
     watch: {
-        // $route(to, from) {
-        //   this.setTop(this.$refs.wrapper.scrollTop);
-        // },
         list(){
-            let wrapper = document.querySelector('.wrapper') 
-             
+            let wrapper = document.querySelector('.wrapper');
             this.$nextTick(()=>{
                 setTimeout(() => {
                     // this.$refs.wrapper.scrollTop=this.top;
@@ -76,21 +79,8 @@ export default {
         })
         }
     },
-    updated(){
-        
-        
-        // if(this.list){
-            // console.log(this.$refs.wrapperScroll.scrollTop);
-        // }
-    },
     methods: {
-        // ...mapMutations({setTop:"SETTOP"}),
-        // listScroll($event){
-        //     // console.log(e.target.clientHeight);
-        //     console.log($event.target.scrollTop);
-        //     // console.log($event.target.scrollTop);
-            
-        // },
+        
         details(index){
             this.$router.push({path:'/details',query:{listId:index}})
         },
@@ -120,10 +110,8 @@ export default {
 </script>
 <style lang='stylus' scoped>
 .history{
-    
-    height 463px
+    height 532px
     overflow-y auto
-   
    .history-item{
        border-bottom  0.027778rem solid rgba(0,0,0,0.08);
    }

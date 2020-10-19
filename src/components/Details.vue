@@ -1,6 +1,6 @@
 <!-- 详情页 -->
 <template>
-  <div class="details" v-cloak>
+  <div class="details" v-cloak id="details">
     <div class="details-box" v-if="list[this.$route.query.listId]">
       <div class="coins flex-justify-center flex-items-center flex-column">
           <img :src="require(`../assets/images/ic_payment_${list[this.$route.query.listId].status}.png`)" alt class="result-icon" />
@@ -19,13 +19,13 @@
         </div>
         <div class="flex-between mb-24">
           <span>{{$t("time")}}</span>
-          <span class="fc-hui6">{{list[this.$route.query.listId].time}}</span>
+          <span class="fc-hui6">{{convertUTCDateToLocalDate(list[this.$route.query.listId].time)}}</span>
         </div>
         <div class="flex-between mb-24">
           <span>{{$t("price")}}</span>
           <span class="fc-hui6"><i class="mr-4">{{list[this.$route.query.listId].currency}}</i>{{list[this.$route.query.listId].money}}</span>
         </div>
-        <div class="flex-between mb-24">
+        <div class="flex-between mb-24" v-if="list[this.$route.query.listId].paymentMethod!=''">
           <span>{{$t("method")}}</span>
           <span class="fc-hui6">{{list[this.$route.query.listId].paymentMethod}}</span>
         </div>
@@ -35,40 +35,88 @@
         <div class="flex-right mt-8">
            <span class="fc-hui6">{{list[this.$route.query.listId].orderNumber}}</span>
         </div>
+        <div class="flex-justify-center refresh-payment fs-14" v-if="list[this.$route.query.listId].is_pay_repair_open">
+          <button v-fb="{cls:'buttonActive'}" @click="purchaseActive" v-if="btn">{{$t("refreshBtn")}}</button>
+          <!-- <a class="disBtn" v-else>Refresh payment status ({{time}}s)</a> -->
+          <a class="disBtn" v-else>{{$t("refreshBtns").replace(/@/, time)}}</a>
+        </div>
       </div>
-      <div
-        class="mt-16 flex-justify-center flex-items-center fc-hui4 fs-12  pl-24 pr-24 text-center"
-      >{{$t("problems")}}</div>
-      <div class="fs-16 flex-justify-center service mt-6 flex-items-center" @click="help" v-if="isAihelp">
-        <img src="../assets/images/ic_CustomerSupport.png" alt />
-        <span class="ml-4 fc-green">{{$t("support")}}</span>
+      <div v-if="isAihelp">
+        <div
+          class="mt-50 flex-justify-center flex-items-center fc-hui4 fs-12  pl-24 pr-24 text-center" 
+        >{{$t("problems")}}</div>
+        <div class="fs-16 flex-justify-center service mt-6 flex-items-center pb-32" @click="help">
+          <img src="../assets/images/ic_CustomerSupport.png" alt />
+          <span class="ml-4 fc-green">{{$t("support")}}</span>
+        </div>
       </div>
+      
     </div>
+    <Purchase v-if="isPurchase" @transClose="close" :orderId="list[this.$route.query.listId].orderNumber" :listId="this.$route.query.listId"/>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
-import {getQueryVariable} from "../api/util"
+import {mapState,mapActions,mapMutations} from "vuex";
+import {getQueryVariable,convertUTCDateToLocalDate} from "../api/util"
+import Purchase from './Purchase'
+import { lock, unlock } from 'tua-body-scroll-lock'
+const details = document.querySelector("#details");
 export default {
   data(){
     return{
-      // details:'',
-      getQueryVariable:getQueryVariable('packageName')
-
+      getQueryVariable:getQueryVariable('packageName'),
+      isPurchase:false,
+      time:10,
+      btn:true,
+      convertUTCDateToLocalDate:convertUTCDateToLocalDate
     }
   },
-  computed: {
-    ...mapState(["list","isAihelp"])
+  components:{
+    Purchase
   },
-  watch: {},
+  computed: {
+    ...mapState(["list","isAihelp","date","updateList"])
+  },
   beforeRouteLeave(to,from,next){
     to.meta.keepAlive=true;
     next();
   },
   methods: {
+    ...mapActions(["confirm"]),
+    ...mapMutations({listEmpty:"LISTEMPTY"}),
+    close(data){
+      this.isPurchase=data;
+      unlock(details);
+      let list=[];
+      if(this.updateList=="TXN_SUCCESS"){
+        list=JSON.parse(JSON.stringify(this.list));
+        list[this.$route.query.listId].status=1;
+        list[this.$route.query.listId].is_pay_repair_open=false;
+        this.listEmpty(list);
+      }
+    },
+    purchaseActive(){
+      this.isPurchase=true
+      lock(details)
+      this.btn=false
+      let timeBtn=setInterval(() => {
+        this.time--
+        if(this.time<=0){
+          this.btn=true
+          this.time=10
+          clearInterval(timeBtn)
+        }
+      }, 1000)
+      let data=this.base.refresh(this.list[this.$route.query.listId].orderNumber);
+      this.confirm(data);
+
+      
+
+    },
     help() {
-      this.base.getHelp();
+      let details=this.$store.state.list[ this.$route.query.listId ];
+      this.base.getHelp(details.orderNumber,JSON.stringify(details));
     },
      filterDays(days){
             let arr=this.base.filterDays(days);
@@ -85,10 +133,6 @@ export default {
             return this.$t("days").replace(/#/, "VIP").replace(/%/,arr[0]);
 
         }
-  },
-  created() {
-    // this.details=this.list[this.$route.query.listId];
-    // console.log(this.list);
   }
 };
 </script>
@@ -98,6 +142,24 @@ export default {
   position absolute
   width 100%
   top 0
+  .refresh-payment{
+    button,a{
+      border: 1px solid #FFAD5C;
+      border-radius: 24px;
+      color #FFAD5C
+      width 288px
+      height 44px
+      margin-top 32px
+      display inline-block
+      line-height 42px
+      text-align center
+    }
+    .disBtn{
+      border: 1px solid #DADADA;
+      color: #DADADA;
+    }
+    
+  }
   .coins {
     height: 4.888889rem;
     .result-icon {
@@ -130,6 +192,9 @@ export default {
       width: 0.5rem;
       height: 0.5rem;
     }
+  }
+  .buttonActive{
+    background: rgba(255,173,92,0.20);
   }
 }
 </style>

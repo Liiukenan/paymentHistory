@@ -21,6 +21,8 @@ Vue.prototype.base = base;
 Vue.prototype.http = axios;
 Vue.config.productionTip = false;
 import { DatetimePicker } from 'mint-ui';
+import vueFeedback from 'vue-feedback';
+Vue.use(vueFeedback)
 Vue.component(DatetimePicker.name, DatetimePicker);
 new Vue({
   router,

@@ -12,9 +12,9 @@
 </template>
 <script>
 import Header from "./components/Header";
-import {_mylist} from './api/server'
 import Loading from './components/Loading';
 import Retry from './components/Retry';
+import Purchase from './components/Purchase'
 import { mapState,mapMutations,mapActions} from 'vuex';
 export default {
   data() {
@@ -40,17 +40,17 @@ export default {
         return;
       }
       this.transitionName = compare ? 'transitionLeft' : 'transitionRight';
-
-      
     }
   },
   methods: {
+    test(){
+      this.base.getHelp();
+    },
     ...mapActions(["getList"]),
     ...mapMutations({setLoading:"SETLOADING",setShowRetry:"SETSHOWRETRY",listEmpty:"LISTEMPTY"}),
     closeLoading(data){
       // 三秒后关闭loading
       this.setLoading(data);
-      console.log(13424);
       // 显示异常页
       this.setShowRetry(true);
       this.listEmpty(null);
@@ -65,8 +65,8 @@ export default {
     },
     title() {
       if (this.$route.path == "/") {
-        this.headerTitle = this.$t("payment"); 
-        // this.headerTitle = this.base.getToken()
+        this.headerTitle = this.$t("payment");
+        // this.headerTitle = this.base.getToken();
       }
       if (this.$route.path == "/details") {
         this.headerTitle = this.$t("details");
@@ -95,7 +95,7 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
-  z-index: 99;
+  // z-index: 99;
   transition: all 0.4s ease-out;
 }
 .transitionLeft-enter,

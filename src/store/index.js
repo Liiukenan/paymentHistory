@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
-import {_mylist,_getList,_info} from '../api/server'
+import {_mylist,_refresh} from '../api/server'
 import createPersistedState from "vuex-persistedstate"
 export default new Vuex.Store({
   state: {
@@ -10,6 +10,7 @@ export default new Vuex.Store({
     showRetry:false,
     date:`${new Date().getFullYear()}/${new Date().getMonth()+1}/${new Date().getDate()}`,
     isAihelp:false,
+    updateList:false
     // top:0
   },
   mutations: {
@@ -28,8 +29,12 @@ export default new Vuex.Store({
     SETDATE(state,date){
       state.date=date
     },
-    GETAIHELP(state,isAihelp){
-      state.isAihelp=isAihelp
+    GETAIHELP(state,data){
+      state.isAihelp=data
+    },
+    UPDATELIST(state,data){
+      console.log(data);
+      state.updateList=data
     },
     SETLIST(state,data){
       // let dd=[
@@ -200,6 +205,23 @@ export default new Vuex.Store({
             context.commit("GETAIHELP",JSON.parse(res.data.is_aihelp_open));
             context.commit("SETLIST",res.data.data.list);
           }
+          
+      })
+    },
+    confirm(context,data){
+      return _refresh(data).then(res=>{
+          // if (res.data.status!=-1) {
+          //   context.commit("GETAIHELP",JSON.parse(res.data.is_aihelp_open));
+          //   context.commit("SETLIST",res.data.data.list);
+          // }
+          // context.commit("UPDATELIST",true);
+          
+          if(res.data.status==-1){
+            return;
+          }
+          setTimeout(() => {
+            context.commit("UPDATELIST",res.data);
+          }, 2000);
           
       })
     }
